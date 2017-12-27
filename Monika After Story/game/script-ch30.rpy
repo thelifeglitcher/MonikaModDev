@@ -230,6 +230,10 @@ init python:
                 songs.current_track = songs.selected_track
                 persistent.current_track = songs.current_track
 
+                # TESTING
+                if "monika_music2" not in persistent.event_list:
+                    pushEvent("monika_music2")
+
     dismiss_keys = config.keymap['dismiss']
 
     def slow_nodismiss(event, interact=True, **kwargs):
@@ -569,11 +573,12 @@ label ch30_loop:
         # Pick a random Monika topic
         label pick_random_topic:
         python:
-            if len(monika_random_topics) > 0:  # still have topics
-                pushEvent(renpy.random.choice(monika_random_topics))
-            else: # no topics left
-                monika_random_topics = list(all_random_topics)
-                pushEvent(renpy.random.choice(monika_random_topics))
+            if len(persistent.event_list) == 0:
+                if len(monika_random_topics) > 0:  # still have topics
+                    pushEvent(renpy.random.choice(monika_random_topics))
+                else: # no topics left
+                    monika_random_topics = list(all_random_topics)
+                    pushEvent(renpy.random.choice(monika_random_topics))
 
     $_return = None
 
